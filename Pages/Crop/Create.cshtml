@@ -1,0 +1,54 @@
+@page
+@model glowing_palm_tree.Pages.Veg_Model.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Crop</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Crop.cNAme" class="control-label"></label>
+                <input asp-for="Crop.cNAme" class="form-control" />
+                <span asp-validation-for="Crop.cNAme" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Crop.sun" class="control-label"></label>
+                <input asp-for="Crop.sun" class="form-control" />
+                <span asp-validation-for="Crop.sun" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Crop.temp" class="control-label"></label>
+                <input asp-for="Crop.temp" class="form-control" />
+                <span asp-validation-for="Crop.temp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Crop.Price" class="control-label"></label>
+                <input asp-for="Crop.Price" class="form-control" />
+                <span asp-validation-for="Crop.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Crop.avYeild" class="control-label"></label>
+                <input asp-for="Crop.avYeild" class="form-control" />
+                <span asp-validation-for="Crop.avYeild" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

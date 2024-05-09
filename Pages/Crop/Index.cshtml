@@ -1,0 +1,103 @@
+@page
+@model glowing_palm_tree.Pages.Veg_Model.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<form>
+	<select asp-for="CurrentSort" asp-items="Model.CropSortList">
+		<option value="">Ascending</option>
+        <option value="">Descending</option>
+        <option value="">Price</option>
+        <option value="">In Production</option>
+	</select>
+	<button type="submit">Sort</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Crop[0].cNAme)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Crop[0].sun)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Crop[0].temp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Crop[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Crop[0].avYeild)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Crop) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.cNAme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sun)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.temp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.avYeild)
+            </td>
+            <td>
+            @foreach (var farmer in item.Production!)
+            {
+                @farmer.Farmer.fName<br />
+            }
+            @if (item.Production.Count == 0)
+            {
+                @:Not in Production;
+            }                  
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.cID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.cID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.cID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<hr/>   
+
+@{
+    var pDisabled = "";
+    if (Model.PageNum <=1)
+    {
+        pDisabled = "disabled";
+    }
+
+    //var nDisabled = "";
+    //if (Model.CropCount/Model.PageNum <1)
+    //{
+      //  nDisabled = "disabled";
+    //}
+}
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item @pDisabled"><a class="page-link" asp-page="./Index" asp-route-PageNum="@(Model.PageNum - 1)" asp-route-CurrentSort="@Model.CurrentSort">Previous</a></li>
+    <li class="page-item "><a class="page-link" asp-page="./Index" asp-route-PageNum="@(Model.PageNum + 1)"asp-route-CurrentSort="@Model.CurrentSort">Next</a></li>
+    </ul>
+</nav>
