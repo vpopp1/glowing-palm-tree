@@ -10,7 +10,7 @@ using final_proj;
 namespace glowing_palm_tree.Migrations
 {
     [DbContext(typeof(CropDbContext))]
-    [Migration("20240508192131_InitialCreate")]
+    [Migration("20240509171833_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,9 +25,6 @@ namespace glowing_palm_tree.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("FarmerfID")
-                        .HasColumnType("INTEGER");
-
                     b.Property<double>("Price")
                         .HasColumnType("REAL");
 
@@ -36,10 +33,8 @@ namespace glowing_palm_tree.Migrations
 
                     b.Property<string>("cNAme")
                         .IsRequired()
+                        .HasMaxLength(60)
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("fID")
-                        .HasColumnType("INTEGER");
 
                     b.Property<int>("sun")
                         .HasColumnType("INTEGER");
@@ -49,9 +44,7 @@ namespace glowing_palm_tree.Migrations
 
                     b.HasKey("cID");
 
-                    b.HasIndex("FarmerfID");
-
-                    b.ToTable("crops");
+                    b.ToTable("Crops");
                 });
 
             modelBuilder.Entity("final_proj.Farmer", b =>
@@ -79,23 +72,51 @@ namespace glowing_palm_tree.Migrations
 
                     b.HasKey("fID");
 
-                    b.ToTable("farmers");
+                    b.ToTable("Farmers");
                 });
 
-            modelBuilder.Entity("final_proj.Crop", b =>
+            modelBuilder.Entity("final_proj.Production", b =>
                 {
-                    b.HasOne("final_proj.Farmer", "Farmer")
-                        .WithMany("crops")
-                        .HasForeignKey("FarmerfID")
+                    b.Property<int>("fID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("cID")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("fID", "cID");
+
+                    b.HasIndex("cID");
+
+                    b.ToTable("productions");
+                });
+
+            modelBuilder.Entity("final_proj.Production", b =>
+                {
+                    b.HasOne("final_proj.Crop", "Crop")
+                        .WithMany("Production")
+                        .HasForeignKey("cID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("final_proj.Farmer", "Farmer")
+                        .WithMany("Production")
+                        .HasForeignKey("fID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Crop");
 
                     b.Navigation("Farmer");
                 });
 
+            modelBuilder.Entity("final_proj.Crop", b =>
+                {
+                    b.Navigation("Production");
+                });
+
             modelBuilder.Entity("final_proj.Farmer", b =>
                 {
-                    b.Navigation("crops");
+                    b.Navigation("Production");
                 });
 #pragma warning restore 612, 618
         }

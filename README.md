@@ -20,5 +20,6 @@ attempt 2 because the key wouldn't recognize and "-sqlite" was obsolete
 dotnet ef dbcontext scaffold "Data Source=CropDatabase.db" Microsoft.EntityFrameworkCore.Sqlite
 
 attempt 3 that finally worked after the second key line was implemented
-dotnet aspnet-codegenerator razorpage -m Crop -dc RazorPagesCropDbContext -udl -outDir Pages\Crop --referenceScriptLibraries --databaseProvider sqlite
+dotnet aspnet-codegenerator razorpage -m Crop -dc CropDbContext -udl -outDir Pages\Crop --referenceScriptLibraries --databaseProvider sqlite
 
+asp-for="AtNewFarm" asp-items="Model.NewFarm" class = "form-control"

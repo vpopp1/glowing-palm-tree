@@ -15,12 +15,12 @@ namespace final_proj
 
         //originally water intake but majority say plenty of water or do not over water but do not give a measure
         //sun is in hours
-        [Display(Name = "Direct Hours of Sunlight")]
+        [Display(Name = "Average Direct Hours of Sunlight")]
         [Required]
         public int sun {get;set;}
 
         //temp range
-        [Display(Name = "Ideal Temperature Range")]
+        [Display(Name = "Ideal Temperature Average")]
         [Required]
         public int temp {get;set;}
 
@@ -33,7 +33,7 @@ namespace final_proj
         [Required]
         public double avYeild {get;set;}
 
-        public List<Production> Production {get;set;} = default!;
+        public List<Production> productions {get;set;} = default!;
         
     }
         //association table with the composite keys and navigations properties

@@ -18,6 +18,6 @@ namespace final_proj
         public double avTemp {get;set;}
         public double CostpUnit {get;set;}
 
-        public List<Production> Production {get;set;} = default!;
+        public List<Production> productions {get;set;} = default!;
     }
 }

@@ -12,15 +12,15 @@ namespace glowing_palm_tree.Pages.Veg_Model
 {
     public class EditModel : PageModel
     {
-        private readonly RazorPagesCropDbContext _context;
+        private readonly final_proj.CropDbContext _context;
 
-        public EditModel(RazorPagesCropDbContext context)
+        public EditModel(final_proj.CropDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public final_proj.Crop Crop {get;set;} = default!;
+        public final_proj.Crop Crop { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,7 +29,7 @@ namespace glowing_palm_tree.Pages.Veg_Model
                 return NotFound();
             }
 
-            var crop =  await _context.Crop.FirstOrDefaultAsync(m => m.cID == id);
+            var crop =  await _context.Crops.FirstOrDefaultAsync(m => m.cID == id);
             if (crop == null)
             {
                 return NotFound();
@@ -70,7 +70,7 @@ namespace glowing_palm_tree.Pages.Veg_Model
 
         private bool CropExists(int id)
         {
-            return _context.Crop.Any(e => e.cID == id);
+            return _context.Crops.Any(e => e.cID == id);
         }
     }
 }

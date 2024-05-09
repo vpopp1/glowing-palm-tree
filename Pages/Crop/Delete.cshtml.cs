@@ -11,15 +11,16 @@ namespace glowing_palm_tree.Pages.Veg_Model
 {
     public class DeleteModel : PageModel
     {
-        private readonly RazorPagesCropDbContext _context;
+        private readonly final_proj.CropDbContext _context;
 
-        public DeleteModel(RazorPagesCropDbContext context)
+        public DeleteModel(final_proj.CropDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public final_proj.Crop Crop {get;set;} = default!;
+        public final_proj.Crop Crop { get; set; } = default!;
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -27,7 +28,7 @@ namespace glowing_palm_tree.Pages.Veg_Model
                 return NotFound();
             }
 
-            var crop = await _context.Crop.FirstOrDefaultAsync(m => m.cID == id);
+            var crop = await _context.Crops.FirstOrDefaultAsync(m => m.cID == id);
 
             if (crop == null)
             {
@@ -47,11 +48,11 @@ namespace glowing_palm_tree.Pages.Veg_Model
                 return NotFound();
             }
 
-            var crop = await _context.Crop.FindAsync(id);
+            var crop = await _context.Crops.FindAsync(id);
             if (crop != null)
             {
                 Crop = crop;
-                _context.Crop.Remove(Crop);
+                _context.Crops.Remove(Crop);
                 await _context.SaveChangesAsync();
             }
 

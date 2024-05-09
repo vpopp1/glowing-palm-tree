@@ -13,9 +13,9 @@ namespace glowing_palm_tree.Pages.Veg_Model
 {
     public class IndexModel : PageModel
     {
-        private readonly RazorPagesCropDbContext _context;
+        private readonly CropDbContext _context;
 
-        public IndexModel(RazorPagesCropDbContext context)
+        public IndexModel(CropDbContext context)
         {
             _context = context;
         }
@@ -36,10 +36,10 @@ namespace glowing_palm_tree.Pages.Veg_Model
 
         public async Task OnGetAsync()
         {   //first has this line last but as project progressed it seemed better to place first 
-            Crop = await _context.Crop.Include(p=> p.Production).ThenInclude(pr=> pr.Farmer).ToListAsync();
+            Crop = await _context.Crops.Include(p=> p.productions!).ThenInclude(pr=> pr.Farmer).ToListAsync();
 
             //next to do the sorting set the linc query then a switch since were sorting in a few different ways
-            var sortcrop = _context.Crop.Select(c=> c);
+            var sortcrop = _context.Crops.Select(c=> c);
 
             List<SelectListItem> sortCrops = new List<SelectListItem> 
             {
@@ -65,7 +65,7 @@ namespace glowing_palm_tree.Pages.Veg_Model
                 break;
 
                 case "in_Production":
-                    sortcrop = sortcrop.Include(p=>p.Production).OrderBy(t=> t.cNAme);
+                    sortcrop = sortcrop.Include(p=>p.productions).OrderBy(t=> t.cNAme);
                 break;
             }
 

@@ -61,11 +61,11 @@
                 @Html.DisplayFor(modelItem => item.avYeild)
             </td>
             <td>
-            @foreach (var farmer in item.Production!)
+            @foreach (var farmer in item.productions!)
             {
                 @farmer.Farmer.fName<br />
             }
-            @if (item.Production.Count == 0)
+            @if (item.productions.Count == 0)
             {
                 @:Not in Production;
             }                  

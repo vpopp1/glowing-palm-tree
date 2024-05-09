@@ -42,10 +42,10 @@
             @Html.DisplayFor(model => model.Crop.avYeild)
         </dd>
         <ul>
-            @foreach(var farmer in Model.Crop.Production) 
+            @foreach(var farmer in Model.Crop.productions) 
                 {
                     <form method="post">
-                    <input type="hidden" asp-for="Farmidtodelete" value="@farmer.Farmer.fID"/>
+                    <input type="hidden" asp-for="Farmidtodelete"value="@farmer.Farmer.fID"/>
                 <li>
                     @farmer.Farmer.fID <input type="submit" Value="Quit Production" class="btn btn-info btn-sm my-1" asp-page-handler="Quit Production" asp-route-id="@Model.Crop.cID">
                 </li>
@@ -53,22 +53,23 @@
                 }
         </ul>
     </dl>
-    <div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <input type="hidden" asp-for="Crop.cID" />
-            <div class="form-group">
-                <select asp-items="Model.AllFarmers" asp-for="AtNewFarm" class="form-control">
-                    <option value="">Select New Location</option>
-                </select>
-                <span asp-validation-for="AtNewFarm" class="text-danger"></span>
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post">
+                    <div class="form-group">
+                        <label asp-for="AtNewFarm" class="control-label"></label>
+                        <select asp-for="AllFarmers" asp-items="Model.FarmerList" class ="form-control"> 
+                           <option value="">Select New Location</option>
+                        </select>
+                        <span asp-validation-for="AtNewFarm" class="text-success"></span>
+                    </div>
+                <div class="form-group">
+	        <input type="submit" value="Delete" class="btn btn-info" />
             </div>
-            <div class="form-group">
-                <input type="submit" value="Add Location" class="btn btn-success" asp-page-handler="" asp-route-id="@Model.Crop.cID"/>
-            </div>
-        </form>
+                </form>
+<       /div>
     </div>
-    </div>
+
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Crop.cID">Edit</a> |

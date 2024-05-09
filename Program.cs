@@ -7,8 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<RazorPagesCropDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("RazorPagesCropDbContext") ?? throw new InvalidOperationException("Connection string 'RazorPagesCropDbContext' not found.")));
+builder.Services.AddDbContext<CropDbContext>(options =>
+
+    options.UseSqlite(builder.Configuration.GetConnectionString("CropContext") ?? throw new InvalidOperationException("Connection string 'RazorPagesCropDbContext' not found.")));
 
 //builder.Services.AddDbContext<CropDbContext>(options =>
   //  options.UseSqlite(builder.Configuration.GetConnectionString("CropContext")));

@@ -11,9 +11,9 @@ namespace glowing_palm_tree.Pages.Veg_Model
 {
     public class CreateModel : PageModel
     {
-        private readonly RazorPagesCropDbContext _context;
+        private readonly final_proj.CropDbContext _context;
 
-        public CreateModel(RazorPagesCropDbContext context)
+        public CreateModel(final_proj.CropDbContext context)
         {
             _context = context;
         }
@@ -24,9 +24,7 @@ namespace glowing_palm_tree.Pages.Veg_Model
         }
 
         [BindProperty]
-        public final_proj.Crop Crop {get;set;} = default!; 
-
-        
+        public final_proj.Crop Crop { get; set; } = default!;
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -36,7 +34,7 @@ namespace glowing_palm_tree.Pages.Veg_Model
                 return Page();
             }
 
-            _context.Crop.Add(Crop);
+            _context.Crops.Add(Crop);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

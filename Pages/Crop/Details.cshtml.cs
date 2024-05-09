@@ -14,9 +14,9 @@ namespace glowing_palm_tree.Pages.Veg_Model
     public class DetailsModel : PageModel
     {
         private readonly ILogger<DetailsModel> _logger;
-        private readonly RazorPagesCropDbContext _context;
+        private readonly CropDbContext _context;
 
-        public DetailsModel(RazorPagesCropDbContext context, ILogger<DetailsModel> logger)
+        public DetailsModel(CropDbContext context, ILogger<DetailsModel> logger)
         {
             _context = context;
             _logger = logger;
@@ -42,7 +42,7 @@ namespace glowing_palm_tree.Pages.Veg_Model
                 return NotFound();
             }
  
-            var crop = await _context.Crop.Include(m=> m.Production).ThenInclude(pr=> pr.Farmer).FirstOrDefaultAsync(m => m.cID == id);
+            var crop = await _context.Crops.Include(m=> m.productions).ThenInclude(pr=> pr.Farmer).FirstOrDefaultAsync(m => m.cID == id);
             if (crop == null)
             {
                 return NotFound();
@@ -62,7 +62,7 @@ namespace glowing_palm_tree.Pages.Veg_Model
                 return NotFound();
             }
 
-            var crop = await _context.Crop.Include(p => p.Production).ThenInclude(f => f.Farmer).FirstOrDefaultAsync(m => m.cID == id);
+            var crop = await _context.Crops.Include(p => p.productions).ThenInclude(f => f.Farmer).FirstOrDefaultAsync(m => m.cID == id);
             
             if (crop == null)
             {
@@ -73,7 +73,7 @@ namespace glowing_palm_tree.Pages.Veg_Model
                 Crop= crop;
             }
 
-            Production Cropdelete = _context.Production.Find(Farmidtodelete, id.Value);
+            Production Cropdelete = _context.productions.Find(Farmidtodelete, id.Value)!;
 
             if (Cropdelete != null)
             {
@@ -101,8 +101,8 @@ namespace glowing_palm_tree.Pages.Veg_Model
                 return NotFound();
             }
 
-            var crop = await _context.Crop.Include(p=>p.Production!).ThenInclude(f => f.Farmer).FirstOrDefaultAsync(m => m.cID == id);            
-            AllFarmers = await _context.Farmer.ToListAsync(p=> p.address);
+            var crop = await _context.Crops.Include(p=>p.productions!).ThenInclude(f => f.Farmer).FirstOrDefaultAsync(m => m.cID == id);            
+            AllFarmers = await _context.Farmers.ToListAsync();
             FarmerList = new SelectList(AllFarmers, "fID", "address");
 
             if (crop == null)
@@ -114,7 +114,7 @@ namespace glowing_palm_tree.Pages.Veg_Model
                 Crop = crop;
             }
 
-            if (!_context.Production.Any(f => f.fID == AtNewFarm && f.cID == id.Value))
+            if (!_context.productions.Any(f => f.fID == AtNewFarm && f.cID == id.Value))
             {
                 Production NewFarm = new Production { cID = id.Value, fID = AtNewFarm};
                 _context.Add(NewFarm);
