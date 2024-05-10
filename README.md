@@ -23,3 +23,4 @@ attempt 3 that finally worked after the second key line was implemented
 dotnet aspnet-codegenerator razorpage -m Crop -dc CropDbContext -udl -outDir Pages\Crop --referenceScriptLibraries --databaseProvider sqlite
 
 asp-for="AtNewFarm" asp-items="Model.NewFarm" class = "form-control"
+
