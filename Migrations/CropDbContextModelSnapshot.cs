@@ -90,13 +90,13 @@ namespace glowing_palm_tree.Migrations
             modelBuilder.Entity("final_proj.Production", b =>
                 {
                     b.HasOne("final_proj.Crop", "Crop")
-                        .WithMany("Production")
+                        .WithMany("productions")
                         .HasForeignKey("cID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("final_proj.Farmer", "Farmer")
-                        .WithMany("Production")
+                        .WithMany("productions")
                         .HasForeignKey("fID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -108,14 +108,16 @@ namespace glowing_palm_tree.Migrations
 
             modelBuilder.Entity("final_proj.Crop", b =>
                 {
-                    b.Navigation("Production");
+                    b.Navigation("productions");
                 });
 
             modelBuilder.Entity("final_proj.Farmer", b =>
                 {
-                    b.Navigation("Production");
+                    b.Navigation("productions");
                 });
 #pragma warning restore 612, 618
+
+
         }
     }
 }

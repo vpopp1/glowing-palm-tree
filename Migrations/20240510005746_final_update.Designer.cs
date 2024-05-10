@@ -10,8 +10,8 @@ using final_proj;
 namespace glowing_palm_tree.Migrations
 {
     [DbContext(typeof(CropDbContext))]
-    [Migration("20240509171833_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240510005746_final_update")]
+    partial class final_update
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,13 +93,13 @@ namespace glowing_palm_tree.Migrations
             modelBuilder.Entity("final_proj.Production", b =>
                 {
                     b.HasOne("final_proj.Crop", "Crop")
-                        .WithMany("Production")
+                        .WithMany("productions")
                         .HasForeignKey("cID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("final_proj.Farmer", "Farmer")
-                        .WithMany("Production")
+                        .WithMany("productions")
                         .HasForeignKey("fID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -111,12 +111,12 @@ namespace glowing_palm_tree.Migrations
 
             modelBuilder.Entity("final_proj.Crop", b =>
                 {
-                    b.Navigation("Production");
+                    b.Navigation("productions");
                 });
 
             modelBuilder.Entity("final_proj.Farmer", b =>
                 {
-                    b.Navigation("Production");
+                    b.Navigation("productions");
                 });
 #pragma warning restore 612, 618
         }

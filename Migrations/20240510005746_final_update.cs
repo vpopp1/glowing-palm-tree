@@ -5,7 +5,7 @@
 namespace glowing_palm_tree.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class final_update : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -66,6 +66,7 @@ namespace glowing_palm_tree.Migrations
                         principalTable: "Farmers",
                         principalColumn: "fID",
                         onDelete: ReferentialAction.Cascade);
+                    
                 });
 
             migrationBuilder.CreateIndex(

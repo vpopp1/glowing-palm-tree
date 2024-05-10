@@ -88,16 +88,18 @@
         pDisabled = "disabled";
     }
 
-    //var nDisabled = "";
-    //if (Model.CropCount/Model.PageNum <1)
-    //{
-      //  nDisabled = "disabled";
-    //}
+    var nDisabled = "";
+    decimal totalpage = Model.cropCount / Model.PageSize; 
+    decimal x = Math.Ceiling(totalpage);
+  if (Model.PageNum == x )
+    {
+        nDisabled = "disabled";
+    }
 }
 
 <nav aria-label="Page navigation example">
   <ul class="pagination">
     <li class="page-item @pDisabled"><a class="page-link" asp-page="./Index" asp-route-PageNum="@(Model.PageNum - 1)" asp-route-CurrentSort="@Model.CurrentSort">Previous</a></li>
-    <li class="page-item "><a class="page-link" asp-page="./Index" asp-route-PageNum="@(Model.PageNum + 1)"asp-route-CurrentSort="@Model.CurrentSort">Next</a></li>
+    <li class="page-item @nDisabled"><a class="page-link" asp-page="./Index" asp-route-PageNum="@(Model.PageNum + 1)"asp-route-CurrentSort="@Model.CurrentSort">Next</a></li>
     </ul>
 </nav>

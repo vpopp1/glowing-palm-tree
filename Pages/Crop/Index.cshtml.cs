@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 using final_proj;
+using SQLitePCL;
+using NuGet.Common;
 
 namespace glowing_palm_tree.Pages.Veg_Model
 {
@@ -29,14 +31,17 @@ namespace glowing_palm_tree.Pages.Veg_Model
 
         [BindProperty(SupportsGet = true)]
         public string? CurrentSort{get;set;} //left empty since the sort and filter could not be used by user
-        //public int cropCount {get;set;} 
+        public int cropCount {get;set;}  //to count total in database
+
 
         public SelectList CropSortList {get; set;} = default!;
  
 
         public async Task OnGetAsync()
-        {   //first has this line last but as project progressed it seemed better to place first 
-            Crop = await _context.Crops.Include(p=> p.productions!).ThenInclude(pr=> pr.Farmer).ToListAsync();
+        {  
+            cropCount =  _context.Crops.Count();
+             //first has this line last but as project progressed it seemed better to place first 
+            Crop = await _context.Crops.Include(p=>p.productions).ThenInclude(pr=> pr.Farmer).ToListAsync();
 
             //next to do the sorting set the linc query then a switch since were sorting in a few different ways
             var sortcrop = _context.Crops.Select(c=> c);
@@ -68,10 +73,6 @@ namespace glowing_palm_tree.Pages.Veg_Model
                     sortcrop = sortcrop.Include(p=>p.productions).OrderBy(t=> t.cNAme);
                 break;
             }
-
-         
-
-            //Crop = await _context.Crop.Count(); 
             Crop = await sortcrop.Skip((PageNum-1)*PageSize).Take(PageSize).ToListAsync();
             
         }
